@@ -7,6 +7,22 @@ class BankingSystemImpl(BankingSystem):
         # Store account_id strings and corresponding balance integers in an accounts dictionary
         self.accounts: dict[str, int] = {}
 
+
+    def create_account(self, timestamp: int, account_id: str) -> bool:
+        """
+        Should create a new account with the given identifier if it doesn't already exist. 
+        Returns True if the account was successfully created 
+        or False if an account with account_id already exists.
+        """
+        # Return False if the account already exists
+        if account_id in self.accounts:
+            return False
+        # Otherwise create it with a starting balance of 0
+        else:
+            self.accounts[account_id] = 0
+            return True
+
+
     def transfer(self, timestamp: int, source_account_id: str, target_account_id: str, amount: int) -> int | None:
         """
         Should transfer the given amount of money from account
@@ -40,7 +56,6 @@ class BankingSystemImpl(BankingSystem):
 
         # Return the source account's balance after transferring the given amount
         return self.accounts[source_account_id]
-
 
 
     def deposit(self, timestamp: int, account_id: str, amount: int) -> int | None:
