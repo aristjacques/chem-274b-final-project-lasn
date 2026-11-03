@@ -1,5 +1,5 @@
 from banking_system import BankingSystem
-
+ 
 
 class BankingSystemImpl(BankingSystem):
 
@@ -40,3 +40,24 @@ class BankingSystemImpl(BankingSystem):
 
         # Return the source account's balance after transferring the given amount
         return self.accounts[source_account_id]
+
+
+
+    def deposit(self, timestamp: int, account_id: str, amount: int) -> int | None:
+        """
+        Should deposit the given `amount` of money to the specified
+        account `account_id`.
+        Returns the balance of the account after the operation has
+        been processed.
+        If the specified account doesn't exist, should return
+        `None`.
+        """
+
+        # Return None if the account to deposit into is not in the accounts dictionary 
+        if account_id not in self.accounts:
+            return None
+
+        # Add the deposited money to the acount
+        self.accounts[account_id] += amount
+        # Return the new balance of the account
+        return self.accounts[account_id]
