@@ -54,6 +54,10 @@ class BankingSystemImpl(BankingSystem):
         if self.accounts[source_account_id] < amount:
             return None
 
+        # add exception if amount is negative:
+        if amount < 0:
+            raise ValueError("Amount to transfer cannot be negative")
+
         # Deduct the given amount from the source account
         self.accounts[source_account_id] -= amount
 
@@ -106,8 +110,7 @@ class BankingSystemImpl(BankingSystem):
             """
             
             # default implementation
-            # if n is less than 0 return an empty list 
-
+            # if n is less than or equal 0 return an empty list 
             if n <= 0:
                 return []
             
