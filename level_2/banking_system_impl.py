@@ -91,41 +91,41 @@ class BankingSystemImpl(BankingSystem):
         return self.accounts[account_id]
 
     def top_spenders(self, timestamp: int, n: int) -> list[str]:
-            """
-            Should return the identifiers of the top `n` accounts with
-            the highest outgoing transactions - the total amount of
-            money either transferred out of or paid/withdrawn (the
-            **pay** operation will be introduced in level 3) - sorted in
-            descending order, or in case of a tie, sorted alphabetically
-            by `account_id` in ascending order.
-            The result should be a list of strings in the following
-            format: `["<account_id_1>(<total_outgoing_1>)", "<account_id
-            _2>(<total_outgoing_2>)", ..., "<account_id_n>(<total_outgoi
-            ng_n>)"]`.
-              * If less than `n` accounts exist in the system, then return
-              all their identifiers (in the described format).
-              * Cashback (an operation that will be introduced in level 3)
-              should not be reflected in the calculations for total
-              outgoing transactions.
-            """
-            
-            # default implementation
-            # if n is less than or equal 0 return an empty list 
-            if n <= 0:
-                return []
-            
-            # use sorted function key, value pairs of our spending dictionary
-            # set sort to sort by dict values in DESCENDING order using lambda function that returns negative value of a dict entry tuple (index 1)
-            # include the account ID as a secondary sort key in ascending order to meet the following spec: 
-                # in case of a tie, sorted alphabetically by `account_id` in ascending order.
-            
-            spending_sorted = sorted(self.account_spending.items(), 
-                                     key = lambda account_value_tuple : (-account_value_tuple[1], account_value_tuple[0]))
+        """
+        Should return the identifiers of the top `n` accounts with
+        the highest outgoing transactions - the total amount of
+        money either transferred out of or paid/withdrawn (the
+        **pay** operation will be introduced in level 3) - sorted in
+        descending order, or in case of a tie, sorted alphabetically
+        by `account_id` in ascending order.
+        The result should be a list of strings in the following
+        format: `["<account_id_1>(<total_outgoing_1>)", "<account_id
+        _2>(<total_outgoing_2>)", ..., "<account_id_n>(<total_outgoi
+        ng_n>)"]`.
+            * If less than `n` accounts exist in the system, then return
+            all their identifiers (in the described format).
+            * Cashback (an operation that will be introduced in level 3)
+            should not be reflected in the calculations for total
+            outgoing transactions.
+        """
+        
+        # default implementation
+        # if n is less than or equal 0 return an empty list 
+        if n <= 0:
+            return []
+        
+        # use sorted function key, value pairs of our spending dictionary
+        # set sort to sort by dict values in DESCENDING order using lambda function that returns negative value of a dict entry tuple (index 1)
+        # include the account ID as a secondary sort key in ascending order to meet the following spec: 
+            # in case of a tie, sorted alphabetically by `account_id` in ascending order.
+        
+        spending_sorted = sorted(self.account_spending.items(), 
+                                    key = lambda account_value_tuple : (-account_value_tuple[1], account_value_tuple[0]))
 
-            # now build list that is of size n from this sorted list. 
-            top_spenders = []
-            # if n is less than amount of accounts slicing should still return all accounts
-            for account_id, spending in spending_sorted[:n]:
-                top_spenders.append(f"{account_id}({spending})")
+        # now build list that is of size n from this sorted list. 
+        results = []
+        # if fewer than n accounts exists, slicing should still return all accounts
+        for account_id, spending in spending_sorted[:n]:
+            results.append(f"{account_id}({spending})")
 
-            return top_spenders
+        return results
