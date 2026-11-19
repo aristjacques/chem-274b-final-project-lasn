@@ -54,9 +54,9 @@ class BankingSystemImpl(BankingSystem):
         if self.accounts[source_account_id] < amount:
             return None
 
-        # add exception if amount is negative:
+        # Return None if amount is negative
         if amount < 0:
-            raise ValueError("Amount to transfer cannot be negative")
+            return None
 
         # Deduct the given amount from the source account
         self.accounts[source_account_id] -= amount
@@ -85,8 +85,13 @@ class BankingSystemImpl(BankingSystem):
         if account_id not in self.accounts:
             return None
 
-        # Add the deposited money to the acount
+        # Return None if amount is negative
+        if amount < 0:
+            return None
+
+        # Add the deposited money to the account
         self.accounts[account_id] += amount
+
         # Return the new balance of the account
         return self.accounts[account_id]
 
@@ -108,8 +113,7 @@ class BankingSystemImpl(BankingSystem):
             should not be reflected in the calculations for total
             outgoing transactions.
         """
-        
-        # default implementation
+
         # if n is less than or equal 0 return an empty list 
         if n <= 0:
             return []
