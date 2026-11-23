@@ -84,12 +84,12 @@ class BankingSystemImpl(BankingSystem):
         if source_account_id == target_account_id:
             return None
 
-        # Return None if the source account's balance is less than the desired transfer amount
-        if self.accounts[source_account_id] < amount:
-            return None
-
         # Return None if amount is negative
         if amount < 0:
+            return None
+
+        # Return None if the source account's balance is less than the desired transfer amount
+        if self.accounts[source_account_id] < amount:
             return None
 
         # Deduct the given amount from the source account
@@ -212,12 +212,12 @@ class BankingSystemImpl(BankingSystem):
         if account_id not in self.accounts:
             return None
 
-        # Return None if the account has insufficient funds
-        if self.accounts[account_id] < amount:
-            return None
-
         # Return None if amount is negative
         if amount < 0:
+            return None
+
+        # Return None if the account has insufficient funds
+        if self.accounts[account_id] < amount:
             return None
 
         # Withdraw the desired amount from the account
